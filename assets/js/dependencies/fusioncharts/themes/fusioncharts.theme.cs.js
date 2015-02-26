@@ -18,8 +18,8 @@ FusionCharts
                                 labelDisplay : "auto",
                                 baseFontColor : "#FFFFFF",
                                 baseFont : "Helvetica Neue,Arial",
-                                captionFontSize : "14",
-                                subcaptionFontSize : "14",
+                                captionFontSize : "10",
+                                subcaptionFontSize : "10",
                                 subcaptionFontBold : "0",
                                 showBorder : "0",
                                 bgColor : "#3a3a41",
@@ -401,8 +401,8 @@ FusionCharts
                                 majorTMHeight : "3",
                                 majorTMColor : "#000000",
                                 minorTMNumber : "0",
-                                valueFontSize : "18",
-                                valueFontBold : "1"
+                                valueFontSize : "10",
+                                valueFontBold : "0"
                             },
                             pointers :
                             {

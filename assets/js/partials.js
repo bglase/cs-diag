@@ -15,7 +15,7 @@ $(document).ready(function() {
                 console.log( data);
               });
 
-        window.setTimeout( function() {
+        window.setInterval( function() {
             $.getJSON( 'status/idiotPanel', function(data, textStatus, jqXHR) {
                 var leds = [];
                 
@@ -24,10 +24,10 @@ $(document).ready(function() {
                 else
                     leds.push({ label: 'Key', color: 'green', state: 'off'});
                 
-                if( data.brake )
-                    leds.push({ label: 'Brake', color: 'red', state: 'blink'});
+                if( data.brakeRelease )
+                    leds.push({ label: 'Brake Rel', color: 'green', state: 'on'});
                 else
-                    leds.push({ label: 'Brake', color: 'red', state: 'off'});
+                    leds.push({ label: 'Brake Rel', color: 'red', state: 'on'});
  
                 if( data.fault )
                     leds.push({ label: 'Fault', color: 'red', state: 'blink'});
@@ -44,10 +44,10 @@ $(document).ready(function() {
                 else
                     leds.push({ label: 'Forward', color: 'green', state: 'off'});
 
-                if( data.backward )
-                    leds.push({ label: 'Backward', color: 'green', state: 'on'});
+                if( data.reverse )
+                    leds.push({ label: 'Reverse', color: 'green', state: 'on'});
                 else
-                    leds.push({ label: 'Backward', color: 'green', state: 'off'});
+                    leds.push({ label: 'Reverse', color: 'green', state: 'off'});
 
                   if( data.indoor )
                     leds.push({ label: 'Indoor', color: 'green', state: 'on'});

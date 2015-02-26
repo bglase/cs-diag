@@ -18,7 +18,13 @@ function outputItems( error, data ) {
     else {
         if( data.complete ) {
             for( var i = 0; i < data.items.length; i++ ) {
-               console.log( data.items[i].name + ': ' + data.items[i].value + ' ' + data.items[i].units);
+                if( 'object' == typeof( data.items[i].value )) {
+                    for( key in data.items[i].value ) {
+                        console.log( data.items[i].name + ': ' + key + ': ' + data.items[i].value[key] + ' ' + data.items[i].units);
+                    }
+                }
+                else
+                    console.log( data.items[i].name + ': ' + data.items[i].value + ' ' + data.items[i].units);
             }
         }
         else {
@@ -63,37 +69,66 @@ module.exports = {
         },
         
 
-                pwm: function (req, res) {
-
-            
-
-            PortManager.readRam(  PortManager.map.pwm, function( error, data ) {
-                outputItems( error, data );
-                 return res.send( '&value=' + data.items[0].value );
-            } );
-
-
-           
+        pwm: function (req, res) {
+                PortManager.readRam(  PortManager.map.pwm, function( error, data ) {
+                    outputItems( error, data );
+                     return res.send( '&value=' + data.items[0].value );
+                } );
           
         },
 
-        idiotpanel: function (req, res) {
+        volts: function (req, res) {
+            return res.send( '&value=50');
+                PortManager.readRam(  PortManager.map.volts, function( error, data ) {
+                    outputItems( error, data );
+                     return res.send( '&value=' + data.items[0].value );
+                } );
+          
+        },
 
- 
+         current: function (req, res) {
+            return res.send( '&value=50');
+                PortManager.readRam(  PortManager.map.current, function( error, data ) {
+                    outputItems( error, data );
+                     return res.send( '&value=' + data.items[0].value );
+                } );
+          
+        },
 
-            var status = {
-                    key: true,
-                    brake: true,
-                    fault: true,
-                    quickstop: true,
-                    forward: true,
-                    reverse: false,
-                    indoor: true,
-                    outdoor: false
+        temp: function (req, res) {
+
+                PortManager.readRam( [PortManager.map.tempLo, PortManager.map.tempHi], function( error, data ) {
+                    outputItems( error, data );
+                     return res.send( '&value=' + data.items[0].value );
+                } );
+          
+        },
+
+       idiotpanel: function (req, res) {
+
+                PortManager.readRam( [PortManager.map.targetPortB, PortManager.map.targetPortC], function( error, data ) {
+                    outputItems( error, data );
+//                     return res.send( '&value=' + data.items[0].value );
+
+           var status = {
+                    key: data.items[0].value.key,
+                    brakeRelease: data.items[1].value.brakeRelease,
+                    fault: false,
+                    quickstop: data.items[1].value.quickstop,
+                    forward: !data.items[1].value.reverse,
+                    reverse: data.items[1].value.reverse,
+                    indoor: data.items[0].value.indoor,
+                    outdoor: !data.items[0].value.indoor,
                     
             };
             return res.json( status );
-          },
+
+                } );
+ 
+},
+          
+
+ 
           
 };
 
